@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
 	env: {
 		SERVER_URL: process.env.SERVER_URL || '',
 	},
+	output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
 };
 
 export default nextConfig;

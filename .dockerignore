@@ -1,0 +1,7 @@
+dist/
+tmp/
+specification/
+build/
+coverage
+.next/
+node_modules/

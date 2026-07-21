@@ -1,0 +1,9 @@
+# Ignore artifacts:
+dist/
+tmp/
+specification/
+build/
+coverage
+.next/
+node_modules/
+pnpm-lock.yaml

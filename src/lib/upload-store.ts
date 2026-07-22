@@ -29,7 +29,7 @@ export const useUploadStore = create<UploadState>((set) => ({
 			error: null,
 		});
 
-		const url = getApiUrl('upload', path);
+		const url = getApiUrl('upload/', path);
 		const formData = new FormData();
 		formData.append('name', fileName);
 		formData.append('file', file);
@@ -40,7 +40,7 @@ export const useUploadStore = create<UploadState>((set) => ({
 				payload: formData,
 			});
 
-			source.addEventListener('info', (e: any) => {
+			source.addEventListener('info', (e: MessageEvent) => {
 				try {
 					const rawData = JSON.parse(e.data);
 					set({
@@ -52,12 +52,12 @@ export const useUploadStore = create<UploadState>((set) => ({
 				}
 			});
 
-			source.addEventListener('error', (e: any) => {
+			source.addEventListener('error', () => {
 				set({ error: 'Upload failed. Please try again.', isUploading: false });
 				source.close();
 			});
 
-			source.addEventListener('readystatechange', (e: any) => {
+			source.addEventListener('readystatechange', () => {
 				// readyState 2 is CLOSED
 				if (source.readyState === 2) {
 					set((state) => {
@@ -75,9 +75,10 @@ export const useUploadStore = create<UploadState>((set) => ({
 			});
 
 			source.stream();
-		} catch (err: any) {
+		} catch (err: unknown) {
+			const errorMessage = err instanceof Error ? err.message : 'Failed to start upload';
 			set({
-				error: err.message || 'Failed to start upload',
+				error: errorMessage,
 				isUploading: false,
 			});
 		}

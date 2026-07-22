@@ -49,9 +49,10 @@ export function RenameDialog({
 			await queryClient.invalidateQueries({ queryKey: ['items', currentPath] });
 			onOpenChange(false);
 			return { success: true };
-		} catch (err: any) {
+		} catch (err: unknown) {
 			console.error(err);
-			return { error: err.message || 'Failed to rename item' };
+			const errorMessage = err instanceof Error ? err.message : 'Failed to rename item';
+			return { error: errorMessage };
 		}
 	}
 

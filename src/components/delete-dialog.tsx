@@ -46,9 +46,10 @@ export function DeleteDialog({
 			await queryClient.invalidateQueries({ queryKey: ['items', currentPath] });
 			onOpenChange(false);
 			return { success: true };
-		} catch (err: any) {
+		} catch (err: unknown) {
 			console.error(err);
-			return { error: err.message || 'Failed to delete item' };
+			const errorMessage = err instanceof Error ? err.message : 'Failed to delete item';
+			return { error: errorMessage };
 		}
 	}
 

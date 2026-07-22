@@ -41,9 +41,10 @@ export function NewFolderDialog({ currentPath }: NewFolderDialogProps) {
 			await queryClient.invalidateQueries({ queryKey: ['items', currentPath] });
 			setOpen(false);
 			return { success: true };
-		} catch (err: any) {
+		} catch (err: unknown) {
 			console.error(err);
-			return { error: err.message || 'Failed to create folder' };
+			const errorMessage = err instanceof Error ? err.message : 'Failed to create folder';
+			return { error: errorMessage };
 		}
 	}
 

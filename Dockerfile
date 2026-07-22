@@ -12,14 +12,16 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
+ARG SERVER_URL
+ENV NEXT_PUBLIC_SERVER_URL=${SERVER_URL}
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm build
 
 FROM base AS production-stage
 
-RUN addgroup --system storage-web && \
-	adduser -g storage-web --system storage-web
+RUN addgroup -S storage-web && \
+	adduser -G storage-web -S storage-web
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1

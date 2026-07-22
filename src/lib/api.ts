@@ -1,7 +1,7 @@
 import { Item } from './types';
 
 const getBaseUrl = () => {
-	return process.env.SERVER_URL || 'http://localhost:8080';
+	return process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:8080';
 };
 
 export const getApiUrl = (endpoint: string, path: string) => {

@@ -29,7 +29,7 @@ export const useUploadStore = create<UploadState>((set) => ({
 			error: null,
 		});
 
-		const url = getApiUrl('upload/', path);
+		const url = getApiUrl('upload', path);
 		const formData = new FormData();
 		formData.append('name', fileName);
 		formData.append('file', file);
@@ -76,7 +76,8 @@ export const useUploadStore = create<UploadState>((set) => ({
 
 			source.stream();
 		} catch (err: unknown) {
-			const errorMessage = err instanceof Error ? err.message : 'Failed to start upload';
+			const errorMessage =
+				err instanceof Error ? err.message : 'Failed to start upload';
 			set({
 				error: errorMessage,
 				isUploading: false,
